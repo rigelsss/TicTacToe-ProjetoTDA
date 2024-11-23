@@ -1,26 +1,32 @@
+# Tic-Tac-Toe
+
+This project is an implementation of the Tic-Tac-Toe game in C, developed for the Algorithms Development Techniques course.
+
+## Project Structure
 tic-tac-toe/
 │
-├── src/                     # Código-fonte principal
-│   ├── main.c               # Arquivo principal que inicializa o programa
-│   ├── game.c               # Implementação das funções do jogo
-│   ├── game.h               # Declaração das funções e structs usadas no jogo
-│   ├── utils.c              # Funções auxiliares (ex.: tratamento de erros)
-│   └── utils.h              # Declaração das funções auxiliares
+├── src/                     # Main source code
+│   ├── main.c               # Main file that initializes the program
+│   ├── game.c               # Implementation of game functions
+│   ├── game.h               # Declaration of functions and structs used in the game
+│   ├── utils.c              # Auxiliary functions (e.g., error handling)
+│   ├── utils.h              # Declaration of auxiliary functions
 │
+├── include/                 # Shared headers (optional)
+│   └── (place here if you want to separate .h files from the source code)
 │
+├── assets/                  # Additional resources
+│   ├── ranking.txt          # File to save rankings (persistence)
+│   └── (other necessary files, such as credits)
 │
-├── assets/                  # Recursos adicionais
-│   ├── ranking.txt          # Arquivo para salvar o ranking (persistência)
-│   └── (outros arquivos necessários, como créditos)
+├── docs/                    # Project documentation
+│   ├── report.pdf           # Descriptive report
+│   └── prints/              # Screenshots of the program execution
 │
-├── docs/                    # Documentação do projeto
-│   ├── relatorio.pdf        # Relatório descritivo
-│   └── prints/              # Prints das telas de execução
-│
-├── tests/                   # Testes (opcional)
-│   ├── test_cases.c         # Código para validar funções específicas
+├── tests/                   # Tests (optional)
+│   ├── test_cases.c         # Code to validate specific functions
 │   └── test_cases.h
 │
-├── .gitignore               # Arquivos e pastas que não devem ser enviados ao Git
-├── Makefile                 # Automação da compilação com `make`
-└── README.md                # Explicação do projeto e como rodar o código
+├── .gitignore               # Files and folders to exclude from Git
+├── Makefile                 # Automates the compilation process with `make`
+└── README.md                # Project explanation and execution guide

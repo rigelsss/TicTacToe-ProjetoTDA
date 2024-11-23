@@ -2,7 +2,7 @@
 
 This project is an implementation of the Tic-Tac-Toe game in C, developed for the Algorithms Development Techniques course.
 
-## Project Structure (Read this file at a IDE or a HTML PAGE)
+## Project Structure (Read this file at a IDE or a HTML page)
 tic-tac-toe/
 │
 ├── src/                     # Main source code

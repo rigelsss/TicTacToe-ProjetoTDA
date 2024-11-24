@@ -38,6 +38,7 @@ int validarEntrada(char *entrada) {
 
 
 
+
 void menuInicial() {
     int opcao = 0;
     char entrada[10];

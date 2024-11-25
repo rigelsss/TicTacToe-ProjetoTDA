@@ -2,7 +2,10 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <string.h>
+#include <locale.h>
+#include <windows.h>
 #include "game.h"
+
 
 void logo_drawer()  {
     printf("===========================================================\n");
@@ -36,12 +39,51 @@ int validarEntrada(char *entrada) {
 }
 
 
+void lerRanking()   {
 
+    setlocale(0, "Portuguese");
+
+    FILE *fileRanking = fopen("../assets/ranking.txt", "r");
+    char linha[50];
+
+    
+    if (fileRanking == NULL)    {
+        printf("Erro ao abrir o arquivo.\n\n");
+        return;
+
+    }
+
+    else {
+        printf("Ranking lido com sucesso!\n\n");
+    }
+
+
+
+    while(fgets(linha, sizeof(linha), fileRanking)) {
+        printf("%s", linha);
+    }
+
+
+    printf("\n\nPressione 'Enter' para voltar ao Menu principal \n");
+    getchar();
+
+
+
+    printf("\n");
+
+
+
+}
 
 
 void menuInicial() {
+
+    setlocale(LC_ALL, "pt_BR.UTF-8");
+    
     int opcao = 0;
     char entrada[10];
+    
+    
     do {
         
         printf("Tic Tac Toe Game\n");
@@ -49,7 +91,7 @@ void menuInicial() {
         printf("1. Jogar\n");
         printf("2. Ver Ranking\n");
         printf("3. Creditos\n");
-        printf("4. Sair\n");
+        printf("4. Sair\n\n");
         printf("Escolha uma opcao: ");
         
         fgets(entrada, sizeof(entrada), stdin);
@@ -71,14 +113,15 @@ void menuInicial() {
     
             case 2:
                 printf("\nAcessando ranking...\n\n");
+                lerRanking();
                 break;
     
             case 3:
-                printf("\nCréditos:.\n\n");
+                printf("\nCreditos: \n\n");
                 break;
     
             case 4:
-                printf("Saindo do jogo. Até logo! \n\n");
+                printf("\nSaindo do jogo... Ate logo! \n\n");
                 break;
 
             default:
@@ -90,6 +133,7 @@ void menuInicial() {
 
     return;
 }
+
 
 
 

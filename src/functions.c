@@ -31,8 +31,9 @@ void escreveRanking()  {
     FILE *fileRanking = fopen("../assets/ranking.txt", "r");
 
     if(fileRanking != NULL)    {
-        printf("Acesso ao arquivo ranking.txt realizado.\n");
+        printf("Acesso ao arquivo ranking.txt realizado com sucesso.\n");
     }
+
     else    {
         printf("Acesso ao arquivo ranking.txt não realizado.\n");
     }
@@ -43,12 +44,14 @@ void escreveRanking()  {
             continue;
         }
 
-        if (sscanf(linha, "%d. %[^-] - %d pontos", &rank, c, &pontos) == 3) {
+        if (sscanf(linha, "%d. %[^-] - %d pontos", &rank, nome, &pontos) == 3) {
             printf("%d %s %d\n", rank, nome, pontos);
         } else {
-            printf("Formato de linha inválido: %s", linha);
+            printf("Formato de linha invalido: %s", linha);
         }
     }
+
+    printf("\n");
 }
 
 
@@ -87,7 +90,7 @@ void lerRanking() {
         printf("Ranking lido com sucesso!\n\n");
     }
 
-    while (fgets(linha, sizeof(linha), fileRanking)) {
+    while(fgets(linha, sizeof(linha), fileRanking)) {
         printf("%s", linha);
     }
 

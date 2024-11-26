@@ -4,5 +4,5 @@
 int main() {
     logo_drawer();
     menuInicial();
-    
+    escreveRanking();
 }

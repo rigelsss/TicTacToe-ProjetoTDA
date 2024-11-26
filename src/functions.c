@@ -22,6 +22,37 @@ void logo_drawer()  {
 };
 
 
+void escreveRanking()  { 
+    int rank, pontos;
+    int linhaAtual = 0;
+    char linha[50];
+    char nome[50];
+
+    FILE *fileRanking = fopen("../assets/ranking.txt", "r");
+
+    if(fileRanking != NULL)    {
+        printf("Acesso ao arquivo ranking.txt realizado.\n");
+    }
+    else    {
+        printf("Acesso ao arquivo ranking.txt não realizado.\n");
+    }
+
+    while(fgets(linha, sizeof(linha), fileRanking)) {
+        if (linhaAtual < 2) {
+            linhaAtual++;
+            continue;
+        }
+
+        if (sscanf(linha, "%d. %[^-] - %d pontos", &rank, c, &pontos) == 3) {
+            printf("%d %s %d\n", rank, nome, pontos);
+        } else {
+            printf("Formato de linha inválido: %s", linha);
+        }
+    }
+}
+
+
+
 int validarEntrada(char *entrada) {
     int i = 0;
 
@@ -39,41 +70,35 @@ int validarEntrada(char *entrada) {
 }
 
 
-void lerRanking()   {
+void lerRanking() {
 
     setlocale(0, "Portuguese");
 
     FILE *fileRanking = fopen("../assets/ranking.txt", "r");
     char linha[50];
+    char nome[50];
+    int rank, pontos;
+    int linhaAtual = 0;
 
-    
-    if (fileRanking == NULL)    {
+    if (fileRanking == NULL) {
         printf("Erro ao abrir o arquivo.\n\n");
         return;
-
-    }
-
-    else {
+    } else {
         printf("Ranking lido com sucesso!\n\n");
     }
 
-
-
-    while(fgets(linha, sizeof(linha), fileRanking)) {
+    while (fgets(linha, sizeof(linha), fileRanking)) {
         printf("%s", linha);
     }
 
+    fclose(fileRanking); 
 
     printf("\n\nPressione 'Enter' para voltar ao Menu principal \n");
     getchar();
 
-
-
     printf("\n");
-
-
-
 }
+
 
 
 void menuInicial() {
@@ -109,6 +134,7 @@ void menuInicial() {
         {
             case 1:
                 printf("\nIniciando jogo...\n\n");
+                escreveRanking();
                 break;
     
             case 2:

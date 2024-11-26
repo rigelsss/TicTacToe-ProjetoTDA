@@ -23,20 +23,40 @@ void logo_drawer()  {
 
 
 void escreveRanking()  { 
+
+    typedef struct  {
+        int rank;
+        int pontos;
+        char nome[50];
+    } Jogador;
+
     int rank, pontos;
+    char nome[50];
     int linhaAtual = 0;
     char linha[50];
-    char nome[50];
+    int capacidadeRanking = 10;
+    int tamanhoRanking = 0;
+    
 
-    FILE *fileRanking = fopen("../assets/ranking.txt", "r");
+    Jogador *ranking = (Jogador *)malloc(capacidadeRanking * sizeof(Jogador));
 
-    if(fileRanking != NULL)    {
-        printf("Acesso ao arquivo ranking.txt realizado com sucesso.\n");
+    if(!ranking)    {
+        printf("Erro na alocação de memória.\n\n");
+        return;
     }
 
-    else    {
-        printf("Acesso ao arquivo ranking.txt não realizado.\n");
+
+    FILE *fileRanking = fopen("../assets/ranking.txt", "r+");
+
+
+    if(fileRanking == NULL)    {
+        printf("Acesso ao arquivo ranking.txt não realizado.\n\n");
+        free(ranking);
+        return;    
     }
+
+    printf("Acesso ao arquivo ranking.txt realizado com sucesso.\n\n");
+    
 
     while(fgets(linha, sizeof(linha), fileRanking)) {
         if (linhaAtual < 2) {
@@ -44,12 +64,38 @@ void escreveRanking()  {
             continue;
         }
 
-        if (sscanf(linha, "%d. %[^-] - %d pontos", &rank, nome, &pontos) == 3) {
-            printf("%d %s %d\n", rank, nome, pontos);
-        } else {
-            printf("Formato de linha invalido: %s", linha);
+
+        if (tamanhoRanking >= capacidadeRanking) {
+            capacidadeRanking *= 2;
+            ranking = (Jogador *)realloc(ranking, capacidadeRanking * sizeof(Jogador));
+            if (!ranking) {
+                printf("Erro ao redimensionar memória.\n");
+                fclose(fileRanking);
+                return;
+            }
         }
+
+        Jogador temp;
+
+        if (sscanf(linha, "%d. %[^-] - %d pontos", &temp.rank, temp.nome, &temp.pontos) == 3) {
+            ranking[tamanhoRanking] = temp;
+            tamanhoRanking++;
+        } else {
+            printf("Encontrado formato de linha invalido.\n");
+            printf("A seguinte linha nao sera considerada para o ranking: %s\n\n", linha);
+        }
+
     }
+
+    for (int i = 0; i < tamanhoRanking; i++) {
+        printf("%d. %s - %d pontos\n", ranking[i].rank, ranking[i].nome, ranking[i].pontos);
+    }
+
+    printf("\nRanking de tamanho: %d\n" ,tamanhoRanking);
+
+    printf("\nPosicao: %d, mome: %s, pontos: %d\n", ranking[5].rank, ranking[5].nome, ranking[5].pontos);
+
+    
 
     printf("\n");
 }

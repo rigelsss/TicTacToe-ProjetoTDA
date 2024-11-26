@@ -4,6 +4,7 @@
 #include <string.h>
 #include <locale.h>
 #include <windows.h>
+#include<time.h>
 #include "game.h"
 
 
@@ -36,6 +37,7 @@ void escreveRanking()  {
     char linha[50];
     int capacidadeRanking = 15;
     int tamanhoRanking = 0;
+    char dataHora[100];
     
 
     Jogador *ranking = (Jogador *)malloc(capacidadeRanking * sizeof(Jogador));
@@ -103,31 +105,34 @@ void escreveRanking()  {
 
 
     fileRanking = fopen("../assets/ranking.txt", "w");
+
     if (fileRanking == NULL) {
-        printf("Erro ao abrir arquivo ranking.txt para escrita.\n");
+        printf("Erro ao abrir o arquivo 'ranking.txt' no modo escrita.\n");
         free(ranking);
         return;
     }
 
-    fprintf(fileRanking, "Tic Tac Toe - Ranking.\n\n");
+    fprintf(fileRanking, "Tic Tac Toe - Ranking\n\n");
 
 
     for (int i = 0; i < tamanhoRanking; i++) {
         fprintf(fileRanking, "%d. %s - %d pontos\n", ranking[i].rank, ranking[i].nome, ranking[i].pontos);
     }
 
-    fclose(fileRanking);
+    time_t horaAtual = time(NULL);
+    struct tm *tempoLocal = localtime(&horaAtual);
 
+    strftime(dataHora, sizeof(dataHora), "%d/%m/%Y %H:%M:%S", tempoLocal);
+
+    fprintf(fileRanking, "\nUltima aualizacao em: %s", dataHora);
+
+    fclose(fileRanking);
 
 
     for (int i = 0; i < tamanhoRanking; i++) {
         printf("%d. %s - %d pontos\n", ranking[i].rank, ranking[i].nome, ranking[i].pontos);
     }
 
-
-    printf("\nRanking de tamanho: %d\n" ,tamanhoRanking);
-
-    
 
     printf("\n");
 }
@@ -192,7 +197,7 @@ void menuInicial() {
     
     do {
         
-        printf("Tic Tac Toe Game\n");
+        printf("Tic Tac Toe Game - Menu\n");
 
         printf("1. Jogar\n");
         printf("2. Ver Ranking\n");

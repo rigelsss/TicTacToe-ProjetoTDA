@@ -1,12 +1,15 @@
-Tic Tac Toe - Ranking.
+Tic Tac Toe - Ranking
 
-1. Billy Joel   - 20 pontos
-2. Beatriz Almeida   - 9 pontos
-3. Carlos Oliveira   - 7 pontos
-4. Edgar Scandurra   - 6 pontos
-5. Rigel Sales   - 5 pontos
-6. Herbert Vianna   - 4 pontos
-7. Paulo Miklos   - 3 pontos
-8. Ze do Caroco   - 2 pontos
-9. Jimmy Cliff   - 1 pontos
-10. Arnaldo Antunes   - 0 pontos
+1. Billy Joel                  - 20 pontos
+2. Beatriz Almeida                  - 9 pontos
+3. Joao Gilberto           - 8 pontos
+4. Carlos Oliveira                  - 7 pontos
+5. Edgar Scandurra                  - 6 pontos
+6. Rigel Sales                  - 5 pontos
+7. Herbert Vianna                  - 4 pontos
+8. Paulo Miklos                  - 3 pontos
+9. Ze do Caroco                  - 2 pontos
+10. Jimmy Cliff                  - 1 pontos
+11. Arnaldo Antunes                  - 0 pontos
+
+Ultima aualizacao em: 26/11/2024 18:16:46

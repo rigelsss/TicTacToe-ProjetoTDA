@@ -34,7 +34,7 @@ void escreveRanking()  {
     char nome[50];
     int linhaAtual = 0;
     char linha[50];
-    int capacidadeRanking = 10;
+    int capacidadeRanking = 15;
     int tamanhoRanking = 0;
     
 
@@ -87,13 +87,45 @@ void escreveRanking()  {
 
     }
 
+    for (int i = 0; i < tamanhoRanking - 1; i++) {
+        for (int j = 0; j < tamanhoRanking - i - 1; j++) {
+            if (ranking[j].pontos < ranking[j + 1].pontos) {
+                Jogador temp = ranking[j];
+                ranking[j] = ranking[j + 1];
+                ranking[j + 1] = temp;
+            }
+        }
+    }
+
+    for (int i = 0; i < tamanhoRanking; i++) {
+        ranking[i].rank = i + 1;
+    }
+
+
+    fileRanking = fopen("../assets/ranking.txt", "w");
+    if (fileRanking == NULL) {
+        printf("Erro ao abrir arquivo ranking.txt para escrita.\n");
+        free(ranking);
+        return;
+    }
+
+    fprintf(fileRanking, "Tic Tac Toe - Ranking.\n\n");
+
+
+    for (int i = 0; i < tamanhoRanking; i++) {
+        fprintf(fileRanking, "%d. %s - %d pontos\n", ranking[i].rank, ranking[i].nome, ranking[i].pontos);
+    }
+
+    fclose(fileRanking);
+
+
+
     for (int i = 0; i < tamanhoRanking; i++) {
         printf("%d. %s - %d pontos\n", ranking[i].rank, ranking[i].nome, ranking[i].pontos);
     }
 
-    printf("\nRanking de tamanho: %d\n" ,tamanhoRanking);
 
-    printf("\nPosicao: %d, mome: %s, pontos: %d\n", ranking[5].rank, ranking[5].nome, ranking[5].pontos);
+    printf("\nRanking de tamanho: %d\n" ,tamanhoRanking);
 
     
 

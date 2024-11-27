@@ -118,6 +118,7 @@ int verificarVencedor(char tabuleiro[3][3]) {
 
 char iniciarJogo()   {
 
+    char entrada[5];
     int linha;
     int coluna;
     int resultado = 0;
@@ -159,11 +160,26 @@ char iniciarJogo()   {
         imprimeTabuleiro(tabuleiro);
         
         printf("%s (%c), escolha em qual linha jogar (1-3): ", jogador[turno].nome, jogador[turno].simbolo);
-        scanf("%d", &linha);
+        fgets(entrada, sizeof(entrada), stdin);
+        entrada[strcspn(entrada, "\n")] = '\0';
 
-        printf("%s (%c), escolha em qual coluna jogar (1-3): ", jogador[turno].nome, jogador[turno].simbolo);
-        scanf("%d", &coluna);
+        if (!validarEntrada(entrada)) {
+            printf("\nEntrada invalida %s, digite um valor entre 1 e 3.\n", jogador[turno].nome);
+            continue;
+        }
 
+        linha = atoi(entrada);
+
+        printf("%s (%c), escolha em qual coluna jogar (1-3): ", jogador[turno].nome, jogador[turno].simbolo);  
+        fgets(entrada, sizeof(entrada), stdin);
+        entrada[strcspn(entrada, "\n")] = '\0';
+
+        if (!validarEntrada(entrada)) {
+            printf("\nEntrada invalida %s, digite um valor entre 1 e 3.\n", jogador[turno].nome);
+            continue;
+        }
+
+        coluna = atoi(entrada);
 
 
         if(validarJogada(tabuleiro, linha - 1, coluna -1))  {
@@ -173,7 +189,7 @@ char iniciarJogo()   {
             if(resultado == 1)  {
                 imprimeTabuleiro(tabuleiro);
                 printf("Parabens %s, voce foi o vencedor!\n", jogador[turno].nome);
-                printf("\n\nPressione 'Enter' para voltar ao Menu principal.\n");
+                printf("\n\nPressione 'Enter' para voltar ao Menu principal.");
                 getchar();
                 break;
             }
@@ -181,6 +197,8 @@ char iniciarJogo()   {
             else if(resultado == -1)    {
                 imprimeTabuleiro(tabuleiro);
                 printf("O jogo terminou empatado.\n");
+                printf("\n\nPressione 'Enter' para voltar ao Menu principal.");
+                getchar();
                 break;
             }
 
@@ -188,7 +206,7 @@ char iniciarJogo()   {
     }    
 
         else    {
-            printf("\nJogada invalida %s, tente novamente:\n", jogador[turno].nome);
+            printf("\nJogada invalida %s, tente novamente.\n", jogador[turno].nome);
         }
     }
     return 0;
@@ -398,7 +416,7 @@ void menuInicial() {
                 break;
 
             default:
-                printf("\nOpcao invalida, tente novamente.\n\n");
+                printf("\nOpcao invalida, tente novamente.\n");
                 break;
         }
 

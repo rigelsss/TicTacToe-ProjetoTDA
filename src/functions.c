@@ -192,6 +192,8 @@ char iniciarJogo()   {
                 printf("Parabens %s, voce foi o vencedor!\n", jogador[turno].nome);
 
                 jogador[turno].pontuacao += 10;
+                jogador[turno].nome[strcspn(jogador[turno].nome, "\n")] = '\0';
+
                 atualizarRanking(jogador[turno].nome, jogador[turno].pontuacao);
 
                 printf("\n\nPressione 'Enter' para voltar ao Menu principal.");
@@ -202,6 +204,21 @@ char iniciarJogo()   {
             else if(resultado == -1)    {
                 imprimeTabuleiro(tabuleiro);
                 printf("O jogo terminou empatado.\n");
+
+                jogador[0].pontuacao += 5;
+                jogador[0].nome[strcspn(jogador[0].nome, "\n")] = '\0';
+
+                atualizarRanking(jogador[0].nome, jogador[0].pontuacao);
+
+
+                jogador[1].pontuacao += 5;
+                jogador[1].nome[strcspn(jogador[1].nome, "\n")] = '\0';
+
+
+                atualizarRanking(jogador[1].nome, jogador[1].pontuacao);
+
+
+
                 printf("\n\nPressione 'Enter' para voltar ao Menu principal.");
                 getchar();
                 break;
@@ -220,37 +237,33 @@ char iniciarJogo()   {
 
 
 void atualizarRanking(char *nome, int pontos) {
-
     typedef struct {
         int rank;
         int pontos;
         char nome[50];
     } Jogador;
 
-
     Jogador *ranking = NULL;
     int capacidadeRanking = 15;
     int tamanhoRanking = 0;
     char linha[100];
     char dataHora[100];
+    char *nomeLimpo;
 
     ranking = (Jogador *)malloc(capacidadeRanking * sizeof(Jogador));
     if (!ranking) {
-        printf("Erro na alocação de memória.\n");
+        printf("Erro na alocação de memoria.\n");
         return;
     }
 
     FILE *fileRanking = fopen("../assets/ranking.txt", "r");
-    if (fileRanking == NULL) {
-        printf("Arquivo de ranking não encontrado. Criando novo ranking...\n");
-    } else {
-        // Ler o ranking existente
+    if (fileRanking != NULL) {
         while (fgets(linha, sizeof(linha), fileRanking)) {
             if (tamanhoRanking >= capacidadeRanking) {
                 capacidadeRanking *= 2;
                 ranking = (Jogador *)realloc(ranking, capacidadeRanking * sizeof(Jogador));
                 if (!ranking) {
-                    printf("Erro ao redimensionar memória.\n");
+                    printf("Erro ao redimensionar memoria.\n");
                     fclose(fileRanking);
                     return;
                 }
@@ -258,13 +271,13 @@ void atualizarRanking(char *nome, int pontos) {
 
             Jogador temp;
             if (sscanf(linha, "%d. %[^-] - %d pontos", &temp.rank, temp.nome, &temp.pontos) == 3) {
+                temp.nome[strcspn(temp.nome, "\n")] = '\0'; 
                 ranking[tamanhoRanking++] = temp;
             }
         }
         fclose(fileRanking);
     }
 
-    // Atualizar ou adicionar o jogador
     int jogadorEncontrado = 0;
     for (int i = 0; i < tamanhoRanking; i++) {
         if (strcmp(ranking[i].nome, nome) == 0) {
@@ -278,16 +291,16 @@ void atualizarRanking(char *nome, int pontos) {
             capacidadeRanking *= 2;
             ranking = (Jogador *)realloc(ranking, capacidadeRanking * sizeof(Jogador));
             if (!ranking) {
-                printf("Erro ao redimensionar memória.\n");
+                printf("Erro ao redimensionar memoria.\n");
                 return;
             }
         }
-        strncpy(ranking[tamanhoRanking].nome, nome, sizeof(ranking[tamanhoRanking].nome));
+        strncpy(ranking[tamanhoRanking].nome, nome, sizeof(ranking[tamanhoRanking].nome) - 1);
+        ranking[tamanhoRanking].nome[sizeof(ranking[tamanhoRanking].nome) - 1] = '\0';
         ranking[tamanhoRanking].pontos = pontos;
         tamanhoRanking++;
     }
 
-    // Ordenar o ranking
     for (int i = 0; i < tamanhoRanking - 1; i++) {
         for (int j = 0; j < tamanhoRanking - i - 1; j++) {
             if (ranking[j].pontos < ranking[j + 1].pontos) {
@@ -298,7 +311,6 @@ void atualizarRanking(char *nome, int pontos) {
         }
     }
 
-    // Reescrever o ranking no arquivo
     fileRanking = fopen("../assets/ranking.txt", "w");
     if (fileRanking == NULL) {
         printf("Erro ao abrir o arquivo para escrita.\n");
@@ -307,149 +319,19 @@ void atualizarRanking(char *nome, int pontos) {
     }
 
     fprintf(fileRanking, "Tic Tac Toe - Ranking\n\n");
-
     for (int i = 0; i < tamanhoRanking; i++) {
         fprintf(fileRanking, "%d. %s - %d pontos\n", i + 1, ranking[i].nome, ranking[i].pontos);
     }
 
-
     time_t horaAtual = time(NULL);
     struct tm *tempoLocal = localtime(&horaAtual);
-
     strftime(dataHora, sizeof(dataHora), "%d/%m/%Y %H:%M:%S", tempoLocal);
 
-    fprintf(fileRanking, "\nUltima aualizacao em: %s UTC-3", dataHora);
-
-    fclose(fileRanking);
+    fprintf(fileRanking, "\nUltima atualizacao em: %s UTC-3\n", dataHora);
 
     fclose(fileRanking);
     free(ranking);
 }
-
-
-
-
-
-void escreveRanking()  { 
-
-    typedef struct  {
-        int rank;
-        int pontos;
-        char nome[50];
-    } Jogador;
-
-    int rank, pontos;
-    char nome[50];
-    int linhaAtual = 0;
-    char linha[50];
-    int capacidadeRanking = 15;
-    int tamanhoRanking = 0;
-    char dataHora[100];
-    
-
-    Jogador *ranking = (Jogador *)malloc(capacidadeRanking * sizeof(Jogador));
-
-    if(!ranking)    {
-        printf("Erro na alocação de memória.\n\n");
-        return;
-    }
-
-
-    FILE *fileRanking = fopen("../assets/ranking.txt", "r+");
-
-
-    if(fileRanking == NULL)    {
-        printf("Acesso ao arquivo ranking.txt não realizado.\n\n");
-        free(ranking);
-        return;    
-    }
-
-    printf("Acesso ao arquivo ranking.txt realizado com sucesso.\n\n");
-    
-
-    while(fgets(linha, sizeof(linha), fileRanking)) {
-        if (linhaAtual < 2) {
-            linhaAtual++;
-            continue;
-        }
-
-
-        if (tamanhoRanking >= capacidadeRanking) {
-            capacidadeRanking *= 2;
-            ranking = (Jogador *)realloc(ranking, capacidadeRanking * sizeof(Jogador));
-            if (!ranking) {
-                printf("Erro ao redimensionar memória.\n");
-                fclose(fileRanking);
-                return;
-            }
-        }
-
-        Jogador temp;
-
-        if (sscanf(linha, "%d. %[^-] - %d pontos", &temp.rank, temp.nome, &temp.pontos) == 3) {
-            ranking[tamanhoRanking] = temp;
-            tamanhoRanking++;
-        } else {
-            printf("Encontrado formato de linha invalido.\n");
-            printf("A seguinte linha nao sera considerada para o ranking: %s\n\n", linha);
-        }
-
-    }
-
-    for(int i = 0; i < tamanhoRanking - 1; i++) {
-
-    }
-
-
-    for (int i = 0; i < tamanhoRanking - 1; i++) {
-        for (int j = 0; j < tamanhoRanking - i - 1; j++) {
-            if (ranking[j].pontos < ranking[j + 1].pontos) {
-                Jogador temp = ranking[j];
-                ranking[j] = ranking[j + 1];
-                ranking[j + 1] = temp;
-            }
-        }
-    }
-
-    for (int i = 0; i < tamanhoRanking; i++) {
-        ranking[i].rank = i + 1;
-    }
-
-
-    fileRanking = fopen("../assets/ranking.txt", "w");
-
-    if (fileRanking == NULL) {
-        printf("Erro ao abrir o arquivo 'ranking.txt' no modo escrita.\n");
-        free(ranking);
-        return;
-    }
-
-    fprintf(fileRanking, "Tic Tac Toe - Ranking\n\n");
-
-
-    for (int i = 0; i < tamanhoRanking; i++) {
-        fprintf(fileRanking, "%d. %s - %d pontos\n", ranking[i].rank, ranking[i].nome, ranking[i].pontos);
-    }
-
-    time_t horaAtual = time(NULL);
-    struct tm *tempoLocal = localtime(&horaAtual);
-
-    strftime(dataHora, sizeof(dataHora), "%d/%m/%Y %H:%M:%S", tempoLocal);
-
-    fprintf(fileRanking, "\nUltima aualizacao em: %s UTC-3", dataHora);
-
-    fclose(fileRanking);
-
-
-    for (int i = 0; i < tamanhoRanking; i++) {
-        printf("%d. %s - %d pontos\n", ranking[i].rank, ranking[i].nome, ranking[i].pontos);
-    }
-
-
-    printf("\n");
-}
-
-
 
 
 void lerRanking() {

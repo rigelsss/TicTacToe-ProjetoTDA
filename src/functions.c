@@ -89,6 +89,11 @@ void escreveRanking()  {
 
     }
 
+    for(int i = 0; i < tamanhoRanking - 1; i++) {
+
+    }
+
+
     for (int i = 0; i < tamanhoRanking - 1; i++) {
         for (int j = 0; j < tamanhoRanking - i - 1; j++) {
             if (ranking[j].pontos < ranking[j + 1].pontos) {
@@ -116,7 +121,7 @@ void escreveRanking()  {
 
 
     for (int i = 0; i < tamanhoRanking; i++) {
-        fprintf(fileRanking, "%d. %s - %d pontos\n", ranking[i].rank, ranking[i].nome, ranking[i].pontos);
+        fprintf(fileRanking, "%d. %s- %d pontos\n", ranking[i].rank, ranking[i].nome, ranking[i].pontos);
     }
 
     time_t horaAtual = time(NULL);
@@ -130,7 +135,7 @@ void escreveRanking()  {
 
 
     for (int i = 0; i < tamanhoRanking; i++) {
-        printf("%d. %s - %d pontos\n", ranking[i].rank, ranking[i].nome, ranking[i].pontos);
+        printf("%d. %s- %d pontos\n", ranking[i].rank, ranking[i].nome, ranking[i].pontos);
     }
 
 

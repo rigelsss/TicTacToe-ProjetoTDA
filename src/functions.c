@@ -4,7 +4,7 @@
 #include <string.h>
 #include <locale.h>
 #include <windows.h>
-#include<time.h>
+#include <time.h>
 #include "game.h"
 
 
@@ -23,6 +23,7 @@ void logo_drawer()  {
 };
 
 
+
 int validarEntrada(char *entrada) {
     int i = 0;
 
@@ -38,6 +39,8 @@ int validarEntrada(char *entrada) {
     }
     return 1; 
 }
+
+
 
 int validarPosicao(int *entrada) {
     int i = 0;
@@ -149,12 +152,14 @@ char iniciarJogo()   {
     fgets(jogador[0].nome, sizeof(jogador[0].nome), stdin);
     jogador[0].simbolo = 'X';
     jogador[0].nome[strcspn(jogador[0].nome, "\n")] = '\0';
+    jogador[0].pontuacao = 0;
 
 
     printf("Digite o nome do Jogador 'O': ");
     fgets(jogador[1].nome, sizeof(jogador[turno].nome), stdin);
     jogador[1].simbolo = 'O';
     jogador[1].nome[strcspn(jogador[1].nome, "\n")] = '\0';
+    jogador[1].pontuacao = 0;
 
 
     while(resultado == 0)   {

@@ -1,27 +1,42 @@
-# Tic-Tac-Toe
+# Tic Tac Toe – TDA
 
-This project is an implementation of the Tic-Tac-Toe game in C, developed for the Algorithms Development Techniques course.
+**Desenvolvido como o projeto final da disciplina Técnicas e Desenvolvimento de Algoritmos (docente: Prof. Wallace Bonfim), curso de Ciência da Computação, semestre 2024.2.**
 
-## Project Structure (Read this file at a IDE or a HTML page)
-tic-tac-toe/
-│
-├── src/                     # Main source code
-│   ├── main.c               # Main file that initializes the program
-│   ├── game.c               # Implementation of game functions
-│   ├── game.h               # Declaration of functions and structs used in the game
-│   ├── utils.c              # Auxiliary functions (e.g., error handling)
-│   ├── utils.h              # Declaration of auxiliary functions
-│
-├── include/                 # Shared headers (optional)
-│   └── (place here if you want to separate .h files from the source code)
-│
-├── assets/                  # Additional resources
-│   ├── ranking.txt          # File to save rankings (persistence)
-│   └── (other necessary files, such as credits)
-│
-├── docs/                    # Project documentation
-│   ├── report.pdf           # Descriptive report
-│   └── prints/              # Screenshots of the program execution
-│
-├── .gitignore               # Files and folders to exclude from Git
-└── README.md                # Project explanation and execution guide
+**Descrição:** Este é um jogo simples de **Tic Tac Toe** (ou **Jogo da Velha**), onde dois jogadores competem para colocar seus símbolos (X ou O) em uma grade 3x3, tentando formar uma linha com três símbolos iguais. O jogo termina quando um jogador ganha ou quando o tabuleiro está completo sem vencedores (empate).
+
+---
+
+## Funcionalidades
+
+- Dois jogadores podem jogar alternadamente.
+- O tabuleiro é uma matriz 3x3 representada no console.
+- O jogo verifica automaticamente se um jogador venceu ou se houve empate.
+- O jogador pode ver o estado do tabuleiro a cada jogada.
+- O ranking é mostrado em um arquivo
+  
+---
+
+## Como rodar
+
+1. Clone o repositório:
+   ```bash
+   git clone https://github.com/rigelsss/TicTacToe-ProjetoTDA
+    ```
+    
+2. Abra o terminal e compile o código-fonte:
+   ```bash
+   gcc src/main.c src/control-functions.c src/printing-functions.c src/ranking-functions.c -o src/main
+    ```
+
+3. Execute o programa:
+    ```bash
+   src/main.exe
+    ```
+
+---
+
+## Autores
+- Beatriz Almeida de Souza Silva
+- Gabriel Bianchini Carvalho
+- José Carlos de Oliveira Neto
+- Rigel Silva de Souza Sales

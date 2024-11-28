@@ -1,7 +1,9 @@
 #include <stdio.h>
-#include "game.h"
+#include <locale.h>
+#include "load-game.h"
 
 int main() {
-    logo_drawer();
+    setlocale(LC_ALL, "pt_BR.UTF-8");
+    mostrarLogo();
     menuInicial();
 }

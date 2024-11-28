@@ -4,6 +4,8 @@
 
 **Descrição:** Este é um jogo simples de **Tic Tac Toe** (ou **Jogo da Velha**), onde dois jogadores competem para colocar seus símbolos (X ou O) em uma grade 3x3, tentando formar uma linha com três símbolos iguais. O jogo termina quando um jogador ganha ou quando o tabuleiro está completo sem vencedores (empate).
 
+Relatórios, video-demonstração e capturas de tela do jogo em funcionamento estão disponíveis na pasta 'docs'.
+
 ---
 
 ## Funcionalidades
